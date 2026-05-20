@@ -1,0 +1,10 @@
+import { Router } from "express";
+import { getAdminStats, getChatLogs, getLeads, patchLeadStatus } from "../controllers/adminController.js";
+import { asyncHandler } from "../middleware/asyncHandler.js";
+import { requireAuth, requireRole } from "../middleware/auth.js";
+export const adminRouter = Router();
+adminRouter.use(requireAuth, requireRole("admin"));
+adminRouter.get("/stats", asyncHandler(getAdminStats));
+adminRouter.get("/leads", asyncHandler(getLeads));
+adminRouter.patch("/leads/:id/status", asyncHandler(patchLeadStatus));
+adminRouter.get("/chats", asyncHandler(getChatLogs));
